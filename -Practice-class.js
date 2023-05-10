@@ -27,19 +27,36 @@
 class Person {
     name;
     age;
-    constructor(name, age) {
+    hobby;
+    constructor(name, age,hobby) {
         this.name = name;
         this.age = age;
+        this.hobby = hobby;
     }
     greet() {
-        return `Hello, my name is ${this.name} and I am ${this.age} years old.`;
+        return `Hello, my name is ${this.name} and I am ${this.age} years old.and I love ${this.hobby}`;
     }
     birthday() {
         this.age++;
         return this.greet();
     }
 }
-const john = new Person('John', 30);
+// const john = new Person('John', 30,'reading');
 // console.log(`${greet()}`);
-const text = john.birthday();
-console.log(text);
+// const text = john.birthday();
+// console.log(text);
+
+let people = [
+    new Person('John', 30,'reading'),
+    new Person('Tom', 25,'swimming'),
+    new Person('Jane', 20,'singing'),
+]
+
+for (let i = 0; i < people.length; i++) {
+    console.log(people[i].greet());
+}
+
+people.forEach(Person => {
+    console.log(Person.greet());
+    
+});
