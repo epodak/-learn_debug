@@ -39,10 +39,7 @@
 记住，这是一个开放性的项目，你可以根据自己的想法添加任何你认为有趣的功能。 */
 
 class Student {
-    name;
-    age;
-    grades;
-    constructor(name, age, grades) {
+    constructor(name, age, grades = []) {
         if (age < 0) {
             throw new Error("Age cannot be negative");
         }
@@ -50,62 +47,57 @@ class Student {
         this.age = age;
         this.grades = grades;
     }
-    addGrade(grade) {
+
+    addGrade = (grade) => {
         if (grade < 0) {
             throw new Error("Grade cannot be negative");
         }
         this.grades.push(grade);
-        return this.grades;
     }
-    getAverageGrade() {
-        let sum = 0;
-        for (let i = 0; i < this.grades.length; i++) {
-            sum += this.grades[i];
-        }
+
+    getAverageGrade = () => {
+        let sum = this.grades.reduce((a, b) => a + b, 0);
         return sum / this.grades.length;
     }
-    getGradeReport() {
-        let report = "";
-        for (let i = 0; i < this.grades.length; i++) {
-            report += this.grades[i] + " ";
-        }
-        return report;
-    
+
+    getGradeReport = () => {
+        return this.grades.join(", ");
+    }
 }
 
 class Classroom {
-    name;
-    students;
-    
-    constructor(name, students) {
+    constructor(name, students = []) {
         this.name = name;
         this.students = students;
     }
-    addStudent(student) {
+
+    addStudent = (student) => {
         if (!(student instanceof Student)) {
             throw new Error("Student is not a Student");
         }
         this.students.push(student);
-        return this.students;
     }
-    getAverageGrade() {
-        let sum = 0;
-        for (let i = 0; i < this.students.length; i++) {
-            sum += this.students[i].getAverageGrade();
-        }
+
+    getAverageGrade = () => {
+        let sum = this.students.reduce((a, b) => a + b.getAverageGrade(), 0);
         return sum / this.students.length;
     }
-    getTopStudent() {
+
+    getTopStudent = () => {
         let topStudent = this.students[0];
-        for (let i = 0; i < this.students.length; i++) {
+        for (let i = 1; i < this.students.length; i++) {
             if (this.students[i].getAverageGrade() > topStudent.getAverageGrade()) {
                 topStudent = this.students[i];
             }
         }
         return topStudent;
-    
+    }
 }
 
-const student = new Student("John", 20, [80, 90, 100]);
+let student1 = new Student("John", 20, [80, 90, 100]);
+let student2 = new Student("Jane", 21, [85, 95, 100]);
+let classroom = new Classroom("Math", [student1]);
 
-const classroom = new Classroom("Math", [student]);
+classroom.addStudent(student2);
+console.log(classroom.getAverageGrade());
+console.log(classroom.getTopStudent().name);
