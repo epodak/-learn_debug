@@ -26,20 +26,12 @@
 
 class Person {
     constructor(name, age, hobby) {
-        try {
             this.name = name;
             this.hobby = hobby;
             this.age = age;
             if (age < 0) {
                 throw new Error('Age cannot be negative');
             }
-            
-        } catch (error) {
-            console.log(error.message);
-            // 这里可以添加处理错误的代码，例如设置年龄为默认值
-            this.age = 0;
-            
-        }
     }
     greet() {
         return `Hello, my name is ${this.name} and I am ${this.age} years old. I love ${this.hobby}`;
@@ -55,17 +47,19 @@ class Person {
 // const text = john.birthday();
 // console.log(text);
 
-let people = [
-    new Person('John', -30,'reading'),
-    new Person('Tom', 25,'swimming'),
-    new Person('Jane', 20,'singing'),
-]
-
-for (let i = 0; i < people.length; i++) {
-    console.log(people[i].greet());
+try {
+    let people = [
+        new Person('John', -30, 'reading'), // 这将引发错误
+        new Person('Tom', 25, 'swimming'),
+        new Person('Jane', 20, 'singing'),
+    ];
+    for (let i = 0; i < people.length; i++) {
+        console.log(people[i].greet());
+    }
+    people.forEach(person => {
+        console.log(person.greet());
+    });
+} catch (error) {
+    console.log(error.message);
+    // 这里可以添加处理错误的代码
 }
-
-people.forEach(Person => {
-    console.log(Person.greet());
-    
-});
